@@ -46,7 +46,7 @@ class viewmodel : ViewModel(){
         saveStateForUndo()
         _textElements.value = _textElements.value.map {
             if(it.id == id){
-                it.copy(fontSize = it.fontSize + if(increase) 2f else -2f)
+                it.copy(fontSize = it.fontSize + if(increase) 3f else -3f)
             }
             else{
                 it

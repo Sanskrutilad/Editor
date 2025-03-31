@@ -18,18 +18,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.foundation.Canvas
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
+@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 @Composable
 fun Editor(viewmodel: viewmodel = viewmodel()) {
     val textElements by viewmodel.textElements.collectAsState()
@@ -118,7 +119,6 @@ fun Editor(viewmodel: viewmodel = viewmodel()) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @Composable
 fun MoveText(textElement: CanvasText, viewmodel: viewmodel, context: Context) {
     var offset by remember { mutableStateOf(textElement.position) }
@@ -140,31 +140,32 @@ fun MoveText(textElement: CanvasText, viewmodel: viewmodel, context: Context) {
                 .background(Color.White, RoundedCornerShape(8.dp))
                 .padding(8.dp)
         ) {
-            Text(
-                text = textElement.text,
-                fontSize = textElement.fontSize.sp,
-                color = Color.Black,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable {
-                        viewmodel.deleteText(textElement.id)
-                        Toast.makeText(context, "Text deleted", Toast.LENGTH_LONG).show()
-                    }
-            )
 
             Row {
                 Button(
                     onClick = { viewmodel.changeFontSize(textElement.id, increase = true) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)) // Green Button
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                 ) {
-                    Text("+", color = Color.White)
+                    Text("+", color = Color.Black, fontSize = 25.sp, textAlign = TextAlign.Center)
+
                 }
-                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = textElement.text,
+                    fontSize = textElement.fontSize.sp,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable {
+                            viewmodel.deleteText(textElement.id)
+                            Toast.makeText(context, "Text deleted", Toast.LENGTH_LONG).show()
+                        }
+                )
                 Button(
                     onClick = { viewmodel.changeFontSize(textElement.id, increase = false) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF44336)) // Red Button
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                 ) {
-                    Text("-", color = Color.White)
+                    Text("-", color = Color.Black, fontSize = 25.sp, textAlign = TextAlign.Center)
+
                 }
             }
         }
